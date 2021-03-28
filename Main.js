@@ -1,10 +1,3 @@
-//תאי טבלת המשחק
-var td1 = document.getElementById("td1");
-var td2 = document.getElementById("td2");
-var td3 = document.getElementById("td3");
-var td4 = document.getElementById("td4");
-var td5 = document.getElementById("td5");
-var td6 = document.getElementById("td6");
 //תמונות המשחק
 var img1 = document.getElementById("img1");
 var img2 = document.getElementById("img2");
@@ -15,21 +8,45 @@ var img6 = document.getElementById("img6");
 var img7 = document.getElementById("img7");
 var img8 = document.getElementById("img8");
 var img9 = document.getElementById("img9");
+var img10 = document.getElementById("img9");
+var img11 = document.getElementById("img11");
+var img12 = document.getElementById("img12");
+var img13 = document.getElementById("img13");
+var img14 = document.getElementById("img14");
+var img15 = document.getElementById("img15");
+var img16 = document.getElementById("img16");
+var img17 = document.getElementById("img17");
+var img18 = document.getElementById("img18");
+var img19 = document.getElementById("img19");
+var img20 = document.getElementById("img20");
+var img21 = document.getElementById("img21");
 
+
+//טבלאות המשחק
+var table1 = document.getElementById("gametable1");
+var table2 = document.getElementById("gametable2");
+var table3 = document.getElementById("gametable3");
+//אלמנטים חיצוניים
+var modalWrapper = document.getElementById("modal-wrapper");
+var modalElement = document.getElementById("modal-content");
 var gametable = document.getElementById("gametable");
 var score = document.getElementById("Score");
-
-var timeUp = false;
-var allHoles = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
+var startGameButton = document.getElementById("playbutton");
+var timer = document.getElementById("timer");
+//משתנים גלובליים
+var gcount = 0;
+var timeUp;
+var allHoles = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21];
 var count = 0;
 var points = 0;
-
+var time;
+//פונקציה שמחזירה את כל החורים למצב הרגיל (רק חורים)
 function resetHoles() {
     for (var i = 0; i <= 8; i++) {
         allHoles[i].setAttribute('src', 'Images/hole.png');
     }
 }
-
+//פונקציה שמעלה את הניקוד על פי סורס
 function ClickToScore(object) {
     var source = object.src;
     if (source.search("Images/Logo.png") != -1) //מחפש את הסטרינג ומחזיר את האינדקס שהוא מתחיל בו בסטרינג שבו חיפשתי
@@ -40,19 +57,73 @@ function ClickToScore(object) {
         object.src = "Images/hole.png";
     }
 }
-
+//פונקציה שמגרילה חור רנדומלי
 function GenerateHoles() {
     resetHoles();
-    var randomHole = Math.floor(Math.random() * 8);
+    var randomHole = Math.floor(Math.random() * 20);
     allHoles[randomHole].setAttribute('src', 'Images/Logo.png');
 }
 
 function resetGame() {
     count = 0;
     score.innerHTML = count;
+    startGameButton.disabled = false;
+    resetHoles();
+    clearInterval(time);
+    clearInterval(timeUp);
+    gcount = 0;
+    timer.innerHTML = gcount;
 }
 
-var time = setInterval("GenerateHoles();", 750);
+function roundTimer() {
+    timer.innerHTML = gcount;
+    gcount += 1;
+    if (gcount === 31) { // Change to 31
+        alert("Time's up");
+        resetGame();
+        timer.innerHTML = gcount;
+    }
 
+}
 
+function OnStartGame() {
+    startGameButton.disabled = true;
+    var counter = 5;
+    modalElement.classList.toggle("hide");
+    time = setInterval(GenerateHoles, 2000);
+    var countDown = setInterval(function() {
+        modalElement.innerHTML = counter;
+        counter--;
+        if (counter === -1) {
+            clearInterval(countDown);
+            modalElement.style.visibility = "hidden";
+            timeUp = setInterval(roundTimer, 1000);
+        }
+    }, 1000);
+
+}
+
+function onStartEasy() {
+    table1.style.visibility = "visible";
+    table2.style.visibility = "hidden";
+    table3.style.visibility = "hidden";
+}
+
+function onStartMedium() {
+    table2.style.visibility = "visible";
+    table1.style.visibility = "hidden";
+    table3.style.visibility = "hidden";
+}
+
+function onStartHard() {
+    table3.style.visibility = "visible";
+    table2.style.visibility = "hidden";
+    table1.style.visibility = "hidden";
+}
+
+function OnInit() {
+    // modalElement.style.visibility = "hidden";
+    // modalWrapper.style.visibility = "hidden";
+    modalElement.classList.toggle("hide");
+}
 console.info("All rights saved to Ori Cohen.");
