@@ -12,30 +12,34 @@
     <ul>
         <li id="Logo-li"><img src="Images/Logo.png" height="50px" width="50px"></li>
         <li><a href="../Project/LoginPage.html">Login</a></li>
-        <li><a href="../Project/GamePage.html">Game</a></li>
+        <li><a href="../Project/GamePage.html"><u style="color:white">Game</u></a></li>
 
     </ul>
 
-    <h1 style="text-align: center; margin-top: 80px;">Score:
-        <p id="Score">0</p>
-    </h1>
-    <div>
+    
+    <div id="gameMenu"><h2 align="center">Game menu</h2>
+        <!-- <select name="" id="" onchange="Function(ev)">
+            <option value="easy">easy</option>
+            <option value="medium">medium</option>
+            <option value="hard">hard</option>
+        </select> -->
+        <button class="gameDifficulty" id="easy" onclick="onStartEasy()" disabled>Easy</button>
+        <button class="gameDifficulty" id="medium" onclick="onStartMedium()"disabled>Medium</button>
+        <button class="gameDifficulty" id="hard" onclick="onStartHard()"disabled>Hard</button>
         <button onclick="resetGame()">Reset game</button>
         <button id="playbutton" onclick="OnStartGame()">Start game</button>
-        <span id="timer">
-
-        </span>
+        <div><span id="timer"></span></div>
+        <h1 style="text-align: center; margin-top: 80px;">
+            <p id="Score"></p>
+        </h1>
     </div>
-    <div id="modal-content"></div>
-
     <div id="GameDiv" align="center">
-        <button class="gameDifficulty" id="easy" onclick="onStartEasy()">Easy</button>
-        <button class="gameDifficulty" id="medium" onclick="onStartMedium()">Medium</button>
-        <button class="gameDifficulty" id="hard" onclick="onStartHard()">Hard</button>
-        <div>
-            <img src="Images/giflogo.gif" alt="">
+        
+        
+            <!-- <img src="Images/giflogo.gif" alt=""> -->
             <!-- first -->
             <table id="gametable1" align="center">
+                <div id="modal-content"></div>
                 <tr id="firstrow">
                     <td class="gametds">
                         <img id="img1" src="Images/hole.png" onclick="ClickToScore(this)">
@@ -119,8 +123,8 @@
                 </tr>
             </table>
 
-            <!-- third -->
-            <table id="gametable3" align="center">
+           <!--third -->
+             <table id="gametable3" align="center">
                 <tr id="firstrow">
                     <td class="gametds">
                         <img id="img1" src="Images/hole.png" onclick="ClickToScore(this)">
@@ -195,7 +199,6 @@
                 </tr>
             </table>
 
-        </div>
     </div>
 
 
