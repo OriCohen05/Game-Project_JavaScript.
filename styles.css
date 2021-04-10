@@ -1,159 +1,317 @@
-//תמונות המשחק
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 
-var img1 = document.getElementById("img1");
-var img2 = document.getElementById("img2");
-var img3 = document.getElementById("img3");
-var img4 = document.getElementById("img4");
-var img5 = document.getElementById("img5");
-var img6 = document.getElementById("img6");
-var img7 = document.getElementById("img7");
-var img8 = document.getElementById("img8");
-var img9 = document.getElementById("img9");
-var img10 = document.getElementById("img9");
-var img11 = document.getElementById("img11");
-var img12 = document.getElementById("img12");
-var img13 = document.getElementById("img13");
-var img14 = document.getElementById("img14");
-var img15 = document.getElementById("img15");
-var img16 = document.getElementById("img16");
-var img17 = document.getElementById("img17");
-var img18 = document.getElementById("img18");
-var img19 = document.getElementById("img19");
-var img20 = document.getElementById("img20");
-var img21 = document.getElementById("img21");
+/*Section 1*/
 
-/*
-var imgArray = Array();
-for (i = i; i < 22; i++) {
-  imgArray.push(document.getElementById(`img` + i));
-}
-*/
 
-//טבלאות המשחק
-var table1 = document.getElementById("gametable1");
-var table2 = document.getElementById("gametable2");
-var table3 = document.getElementById("gametable3");
-//אלמנטים חיצוניים
-var modalWrapper = document.getElementById("modal-wrapper");
-var modalElement = document.getElementById("modal-content");
-var modalTimer = document.getElementById("modal-timer");
-var gametable = document.getElementById("gametable");
-var score = document.getElementById("Score");
-var startGameButton = document.getElementById("playbutton");
-var timer = document.getElementById("timer");
-var hard = document.getElementById("hard");
-var medium = document.getElementById("medium");
-var easy = document.getElementById("easy");
-//משתנים גלובליים
-var gcount = 0;
-var timeUp;
-var allHoles = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21];
-var count = 0;
-var points = 0;
-var time;
-var gBoardSize = 0;
-var gFlag = false;
-//פונקציה שמחזירה את כל החורים למצב הרגיל (רק חורים)
-function resetHoles() {
-    for (var i = 0; i <= gBoardSize; i++) {
-        allHoles[i].setAttribute('src', 'Images/hole.png');
-    }
-}
-//פונקציה שמעלה את הניקוד על פי סורס
-function ClickToScore(object) {
-    var source = object.src;
-    if (source.search("Images/Logo.png") != -1) //מחפש את הסטרינג ומחזיר את האינדקס שהוא מתחיל בו בסטרינג שבו חיפשתי
-    //-1 במקרה שלי הוא false
-    {
-        count++;
-        score.innerHTML = "Your score: " + count;
-        object.src = "Images/hole.png";
-    }
-}
-//פונקציה שמגרילה חור רנדומלי
-function GenerateHoles() {
-    resetHoles();
-    var randomHole = Math.floor(Math.random() * gBoardSize);
-    console.log(randomHole);
-    allHoles[randomHole].setAttribute('src', 'Images/Logo.png');
+/*Footer styling*/
+
+.footer {
+    text-align: center;
+    clear: both;
+    margin-top: 200px;
+    min-height: 100%;
+    height: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-function resetGame() {
-    count = 0;
-    gBoardSize = 0;
-    score.innerHTML = "";
-    startGameButton.disabled = false;
-    resetHoles();
-    clearInterval(time);
-    clearInterval(timeUp);
-    gcount = 0;
-    timer.innerHTML = "";
-    table1.style.display = "none";
-    table2.style.display = "none";
-    table3.style.display = "none";
-    gFlag = false;
+.footer h1 {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 100;
 }
 
-function roundTimer() {
-    timer.innerHTML = "game timer: " + gcount;
-    gcount += 1;
-    if (gcount === 31) {
-        alert("Time's up");
-        resetHoles();
-        resetGame();
-        timer.innerHTML = ' ';
-    }
 
+/*End of section 1*/
+
+
+/*Section 2*/
+
+
+/*Body styling*/
+
+html {
+    font-family: 'Oswald', sans-serif;
+    background-image: linear-gradient(#3b3b3b, #000000);
+    background-attachment: fixed;
 }
 
-function OnStartGame() {
-    // if (!gFlag) {
-    //     alert("Choose board before start!");
-    //     easy.disabled = false;
-    //     medium.disabled = false;
-    //     hard.disabled = false;
-    //     gFlag = true;
-    //     resetGame();        
-    // } else {
-        startGameButton.disabled = true;
-        var counter = 5;
-        modalElement.classList.toggle("hide");
-        time = setInterval(GenerateHoles, 2000);
-        var countDown = setInterval(function() {
-            modalElement.innerHTML = counter;
-            counter--;
-            if (counter === -1) {
-                clearInterval(countDown);
-                modalElement.style.display = "none";
-                timeUp = setInterval(roundTimer, 1000);
-            }
-        }, 1000);
-    //}
+element.style {
+    font-family: 'Oswald', sans-serif;
 }
 
-function onStartEasy() {
-    table1.style.display = "block";
-    table2.style.display = "none"
-    table3.style.display = "none";
-    gBoardSize = 8;
+
+/*End of section 2*/
+
+
+/*Section 3*/
+
+
+/*Header list, toolbar*/
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-image: linear-gradient(#3b3b3b, #000000);
+    left: 0%;
+    right: 0%;
+    position: absolute;
+    top: 0%;
 }
 
-function onStartMedium() {
-    table2.style.display = "block";
-    table3.style.display = "none";
-    table1.style.display = "none";
-    gBoardSize = 11;
+li {
+    float: left;
+    font-size: larger;
 }
 
-function onStartHard() {
-    table3.style.display = "block";
-    table1.style.display = "none";
-    table2.style.display = "none";
-    gBoardSize = 20;
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 50px;
+    text-decoration: none;
 }
 
-function OnInit() {
-
-    modalElement.classList.toggle("hide");
+#Logo-li {
+    float: right;
 }
-console.info("All rights saved to Ori Cohen.");
+
+
+/*Switchs color on hover*/
+
+li a:hover {
+    background-color: rgb(255, 255, 255);
+    color: black;
+
+
+}
+li u:hover{
+    color: black;
+    background-color: white;
+}
+
+#imglogo {
+    width: 100%;
+    height: 100%;
+}
+
+
+/*End of section 3*/
+
+
+/*Section 4*/
+
+
+/*Table that icluded the registiration form.*/
+
+#LoginTable {
+    background-color: rgb(172, 166, 164);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-color: white;
+    border-width: 1px;
+    border-style: solid;
+    color: white;
+    background-color: #000000;
+    background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
+    filter: drop-shadow(10px 10px 4px #ebe9fd);
+}
+
+
+/*Register button*/
+
+.SubmitRegister {
+    height: auto;
+    width: auto;
+    margin-top: 10px;
+    border-radius: 40px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-color: black;
+    border-width: 3px;
+    border-style: solid;
+    background-color: white;
+    font-size: xx-large;
+    font-weight: 900;
+}
+
+
+/*All the inputs for example: First name, Last name , etc..*/
+
+input {
+    font-size: larger;
+    margin-right: 10px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    width: 140px;
+    height: 20px;
+    padding: 5px;
+    border-color: black;
+    border-radius: 20px;
+    padding-left: 10px;
+}
+
+
+/*Switches color on gender selection*/
+
+.radio-toolbar input[type="radio"][id="male"]:checked+label {
+    background-color: rgb(17, 168, 214);
+    color: white;
+}
+
+.radio-toolbar input[type="radio"][id="female"]:checked+label {
+    background-color: hotpink;
+    color: white;
+}
+
+.radio-toolbar input[type="radio"] {
+    display: none;
+}
+
+.radio-toolbar label {
+    display: inline-block;
+    background-color: white;
+    width: 150px;
+    height: 17px;
+    margin-right: 13px;
+    padding: 2.5px;
+    padding-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    text-align: center;
+    font-family: Calibri;
+    color: black;
+    font-size: larger;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/*Centering the form to the middle.*/
+
+#form {
+    margin-top: 100px;
+}
+
+#country {
+    font-size: larger;
+    font-family: Calibri;
+    margin-right: 0px;
+    margin-top: -8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    width: 130px;
+    height: 33px;
+    border-color: black;
+    border-radius: 20px;
+    padding-left: 10px;
+}
+
+#email {
+    width: 320px;
+}
+
+#phoneNumber {
+    margin-left: -30px;
+    width: 170px;
+}
+
+#TOS {
+    width: auto;
+    height: auto;
+}
+
+#toslink {
+    font-weight: 100;
+    font-size: small;
+    color: red;
+}
+
+
+/*End of section 4*/
+
+
+/*Section 5*/
+
+.idle {
+    color: #ebe9fd;
+    text-align: center;
+    margin-top: 250px;
+}
+
+
+/*TOS font color - white , font size is big.*/
+
+#rules {
+    color: white;
+    font-size: 50px;
+    text-align: right;
+}
+
+
+/*End of section 5*/
+
+
+/*Section 6*/
+
+#gametable1,
+#gametable2,
+#gametable3 {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    margin-top: 10%;
+    border: 5px solid;
+    border-color: #ebe9fd;
+    display: none;
+}
+
+.gametds {
+    height: 25px;
+}
+
+#GameDiv {
+    margin: 30px;
+    background-color: #ffffff;
+    border: 3px solid black;
+    opacity: 0.6;
+    height: 80%;
+    width: 80%;
+}
+
+#GameDiv h1 {
+    margin: 5%;
+    color: black;
+    text-align: center;
+}
+
+#modal-content {
+    background: white;
+    width: 450px;
+    min-height: 550px;
+    position: relative;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 3px solid black;
+    opacity: 0.6;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+#gameMenu{
+    background-color: rgb(15, 22, 22);
+}
+.gameDifficulty{
+}
