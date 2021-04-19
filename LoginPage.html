@@ -10,18 +10,18 @@
 
 <body>
 
-    <ul>
-        <li id="Logo-li"><img src="Images/Logo.png" height="50px" width="50px"></li>
-        <li><a href="../Project/LoginPage.html">Login</a></li>
-        <li><a href="../Project/GamePage.html">Game</a></li>
-    </ul>
+    <div class="container-fluid">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li><a id="len1" class="hoverable" href="../Project/LoginPage.html">Login</a></li>
+              <li><a id="len3" class="hoverable" href="../Project/GamePage.html">Game</a></li>
+              <li><a id="len2" class="hoverable" href="#">About</a></li>
+            </ul>
+          </div>
+        </nav>
     <form id="form" method="post" action="?">
         <table align="center" id="LoginTable">
-            <tr>
-                <div style="text-align: center;">
-                    <img src="Images/Register.png" width="390" height="200">
-                </div>
-            </tr>
             <tr>
                 <td>
                     <p>First name</p>
@@ -133,7 +133,7 @@
         </table>
     </form>
     <div class=" footer ">
-        <h1> &copy; Site developed by Ori Cohen <img src="Images/Logo.png" height="100px" alt=""></h1>
+        <h1> &copy; Site developed by Ori Cohen <img src="Images/Logo.png" height="50px" alt=""></h1>
 
     </div>
     <script src="Main.js ">
