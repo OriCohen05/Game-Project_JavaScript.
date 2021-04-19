@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
-
+/*
+My colors:
+#002a29
+#007a79
+#c7cedf
+#976f4f
+#4d2a16
+#1497ab
+*/
 /*Section 1*/
 
 
@@ -33,12 +41,16 @@
 
 html {
     font-family: 'Oswald', sans-serif;
-    background-image: linear-gradient(#3b3b3b, #000000);
+    background-image: linear-gradient(#007a79, #c7cedf);
     background-attachment: fixed;
+    ;
 }
 
 element.style {
     font-family: 'Oswald', sans-serif;
+}
+body{
+    color: black;
 }
 
 
@@ -49,53 +61,55 @@ element.style {
 
 
 /*Header list, toolbar*/
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-image: linear-gradient(#3b3b3b, #000000);
-    left: 0%;
-    right: 0%;
+.hoverable {
+    display: inline-block;
+    backface-visibility: hidden;
+    vertical-align: middle;
+    position: relative;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition-duration: 0.3s;
+}
+.hoverable:before {
     position: absolute;
-    top: 0%;
+    pointer-events: none;
+    z-index: -1;
+    content: '';
+    top: 100%;
+    left: 5%;
+    height: 10px;
+    width: 90%;
+    opacity: 0;
+    background: -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
+   /* W3C */
+    transition-duration: 0.3s;
+}
+.hoverable:hover, .hoverable:active, .hoverable:focus {
+    transform: translateY(-5px);
+}
+.hoverable:hover:before, .hoverable:active:before, .hoverable:focus:before {
+    opacity: 1;
+    transform: translateY(-5px);
 }
 
-li {
-    float: left;
-    font-size: larger;
+.bounce {
+    animation-duration: 2s;
 }
-
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 li a {
     display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 50px;
-    text-decoration: none;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
-
-#Logo-li {
-    float: right;
-}
-
-
-/*Switchs color on hover*/
-
-li a:hover {
-    background-color: rgb(255, 255, 255);
-    color: black;
-
-
-}
-li u:hover{
-    color: black;
-    background-color: white;
-}
-
-#imglogo {
-    width: 100%;
-    height: 100%;
+li{
+    float: left;
 }
 
 
@@ -117,7 +131,9 @@ li u:hover{
     border-style: solid;
     color: white;
     background-color: #000000;
-    background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
+    /*#976f4f
+#4d2a16*/
+    background-image: linear-gradient(315deg, #002a29 , rgb(0, 0, 0) );
     filter: drop-shadow(10px 10px 4px #ebe9fd);
 }
 
