@@ -21,23 +21,26 @@
         </nav>
 
     
-    <div id="gameMenu"><h2 align="center">Game menu</h2>
+    <div id="gameMenu">
+        <h2 align="center">Game menu</h2>
         <!-- <select name="" id="" onchange="Function(ev)">
             <option value="easy">easy</option>
             <option value="medium">medium</option>
             <option value="hard">hard</option>
         </select> -->
+        <div align="center">
         <button class="gameDifficulty" id="easy" onclick="onStartEasy()">Easy</button>
-        <button class="gameDifficulty" id="medium" onclick="onStartMedium()" disabled>Medium</button>
-        <button class="gameDifficulty" id="hard" onclick="onStartHard()" disabled>Hard</button>
+        <button class="gameDifficulty" id="medium" onclick="onStartMedium()">Medium</button>
+        <button class="gameDifficulty" id="hard" onclick="onStartHard()">Hard</button>
         <button onclick="resetGame()">Reset game</button>
         <button id="playbutton" onclick="OnStartGame()">Start game</button>
-        <div><span id="timer"></span></div>
+        </div>
+        <span id="timer"></span>
         <h1 style="text-align: center; margin-top: 80px;">
             <p id="Score"></p>
         </h1>
     </div>
-    <div id="GameDiv" align="center">
+    <div id="GameDiv" align="center" style="display: none;">
         
         
             <!-- <img src="Images/giflogo.gif" alt=""> -->
