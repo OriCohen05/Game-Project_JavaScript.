@@ -71,17 +71,19 @@ function OnStartGame() {
 פרמטרים: לא מקבלת
 ערך מוחזר: לא מחזירה
      */
+    
     gameStreak++; // כל תחילת משחק מונה המשחקים יקודם באחד
     resetGameButton.style.display = "block"; //מוצג כפתור הריסט גיים
-    BuildGameTable(); // יוצר את הטבלה
+     // יוצר את הטבלה
+    document.getElementById('gametable1').innerHTML = BuildGameTable(gameMode);
     score.innerHTML = `Your score: ${points} !`; //מציג את הניקוד
     timer.innerHTML = `Game timer: ${gcount}`; //מציג את הטיימר
     document.getElementById('streak').innerHTML = `Game streak: ${gameStreak}` //מציג את רצף המשחקים
-        gamediv.style.visibility = "visible" //מציג את לוחות המשחק
-        startGameButton.disabled = true; //מבטל את האופציה של ללחוץ על כפתור תחילת המשחק בזמן שהמשחק רץ
-        counter = 5; //5 שניות לפני תחילת המשחק
-        modalElement.classList.toggle("hide"); //מסתיר את המודל על פי הגדרות הקלאס ב css
-        countDownInterval = setInterval('countDown()', 1000); //טיימר שיורד כל שניה
+    gamediv.style.visibility = "visible" //מציג את לוחות המשחק
+    startGameButton.style.display = "none"; //מבטל את האופציה של ללחוץ על כפתור תחילת המשחק בזמן שהמשחק רץ
+    counter = 5; //5 שניות לפני תחילת המשחק
+    modalElement.classList.toggle("hide"); //מסתיר את המודל על פי הגדרות הקלאס ב css
+    countDownInterval = setInterval('countDown()', 1000); //טיימר שיורד כל שניה
 }
 function GenerateHoles() {
     /*
@@ -93,7 +95,7 @@ function GenerateHoles() {
     resetHoles(); //מחזיר את כל החורים למצב הרגיל (רק חורים)
     var randomHole = Math.floor(Math.random() * gBoardSize); //הגרלת מיקום ספציפי בטבלה
     recentHole = randomHole; // מגדיר שהחור האחרון היה החור הספציפי
-    if(recentHole == randomHole){ //אם החור הקודם הוא החור הספציפי מגריל מחדש
+    while (recentHole == randomHole) { //אם החור הקודם הוא החור הספציפי מגריל מחדש
         randomHole = Math.floor(Math.random() * gBoardSize); 
     }
         document.getElementById(`img${randomHole}`).setAttribute('src', './Images/Logo.png');//שם את המספר הרנדומלי על מיקום בלוח
@@ -125,13 +127,30 @@ function ClickToScore(object)
         object.src = "./Images/hole.png"; //החזרה לחור לאחר לחיצה
     }
     else if(source.search("./Images/BOMB.png") != -1){ //אם זו פצצה
-        gameOverFlag = true; //המשחק נגמר
+        if (points >= bestScore) { //בודק אם נשבר השיא
+            saveToStorage("bestScore", points); //מעלה לאחסון את השיא שנשבר
+            elemBestScore.innerHTML = points; //שינוי השיא בתצוגה
+        }
         popUp.appendChild(alertText); //הצגה בחלון הקופץ
         popUp.appendChild(alertCount); //""
         popUp.style.visibility = "visible"; //הצגת החלון
         alertText.setAttribute('style', 'color: red;'); //הטקטס בחלון אדום
         alertText.innerHTML = "BOOM! </br> GAME OVER!"; // הצגת הטקסט בחלון
-        alertCount.setAttribute('style','color: red;');  
+        alertCount.setAttribute('style','color: red;'); 
+        var alertIntv = setInterval(function(){ //ספירה לאחור לסגירת החלון
+            alertCount.innerHTML = backCount;
+            backCount--;
+            if(backCount === -1){
+                clearInterval(alertIntv);
+                popUp.style.visibility = "hidden";
+                popUp.innerHTML = "";
+                backCount = 3; //החזרת משתנה הספירה לאחור לערכו המקורי
+            }
+        },1000)
+        recentScore = points; //שינוי הניקוד האחרון בתום המשחק
+        elemRecentScore.innerHTML = `recent score: ${recentScore}`; //שינוי התצוגה של הניקוד האחרון
+        resetGame();//איפוס המשחק
+         
     }
     else if(source.search("./Images/STAR.png") != -1){ //אם זה כוכב
         points += 5; // קידום הנקודות בחמש
@@ -139,7 +158,7 @@ function ClickToScore(object)
         object.src = "./Images/hole.png"; // החזרה לחור לאחר לחיצה
     }
 }
-function BuildGameTable()
+function BuildGameTable(rows)
 /* 
 פונקציה הבונה את טבלת המשחק באופן דינאמי לפי רמות הקושי, והגדלים הנזקקים.
 מזומנת ב:OnStartGame 
@@ -152,42 +171,21 @@ function BuildGameTable()
     var count = 0; //מונה בשביל מערך התמונות
     var src = './Images/hole.png'; // מיקום התמונה של החור
     var strHtml = ''; //רינדור לקוד html
-    var rows = 0; //שינוי שורות לפי רמת קושי
-    if(gameMode === 'hard')
-        rows = 5;
-    if(gameMode === 'medium')
-        rows = 4;
-    if(gameMode === 'easy')
-        rows = 3;
         for (var i = 0; i < rows; i++) { //לולאה שבונה את השורות והתוכן שלהן
             strHtml += `<tr>`; //הוספת שורה לרינדור על מנת לא להשתמש יותר מדי בדום 
-            if(gameMode === 'hard'){ //גודל שונה לכל רמת קושי
-                for (var j = 1; j < 6; j++) {
-                    strHtml += `<td class="gametds"><img id=img${count} src=${src} onclick="ClickToScore(this)"></td>`;
-                    allHoles.push(count); //הוספת תא למערך עם הערך של קאונט
-                    count++; //מונה כמה תמונות יש על מנת להשתמש במערך בפונקציות שונות
-                }
+            //גודל שונה לכל רמת קושי
+            for (var j = 0; j < rows; j++) {
+                strHtml += `<td class="gametds"><img id=img${count} draggable="false" src=${src} onclick="ClickToScore(this)"></td>`;
+                allHoles.push(count); //הוספת תא למערך עם הערך של קאונט
+                count++; //מונה כמה תמונות יש על מנת להשתמש במערך בפונקציות שונות
             }
-            else if(gameMode === 'medium'){//גודל שונה לכל רמת קושי
-                for (var j = 1; j < 5; j++) {
-                    strHtml += `<td class="gametds"><img id=img${count} src=${src} onclick="ClickToScore(this)"></td>`;
-                    allHoles.push(count);
-                    count++;
-                }
-            }
-            else{
-                for (var j = 1; j < gBoardSize / 2; j++) {//גודל שונה לכל רמת קושי
-                    strHtml += `<td class="gametds"><img id=img${count} src=${src} onclick="ClickToScore(this)"></td>`;
-                    allHoles.push(count);
-                    count++;
-                }
-            }
-           
-           strHtml += `</tr>`;
-    }
-    
-    document.getElementById('gametable1').innerHTML = strHtml; // לאחר בניית גוף הטבלה מכניס את כל הסטרינג שנבנה
+            strHtml += `</tr>`;
+        }
+                
+        return strHtml;
 }
+    
+
 
 
 
@@ -202,6 +200,7 @@ function resetGame() {
     count = 0; 
     points = 0;
     gcount = 0;
+    console.log("hi");
     gBoardSize = 0;
     score.innerHTML = "";
     startGameButton.disabled = false; //אפשר להתחיל משחק חדש
@@ -253,13 +252,17 @@ function countDown() { //קורה כל שניה
 פרמטרים: לא מקבלת
 ערך מוחזר: לא מחזירה
      */
+    modalElement.classList.toggle("show");
     modalElement.innerHTML = `<h2> Game starts in: </br> ${counter} </h2>`; //תצוגה בחלונית
     counter--; 
+    console.log(counter);
     if (counter == -1) {
         clearInterval(countDownInterval); //ניקוי ספירה לאחור לפני תחילת המשחק
-        modalElement.style.display = "none"; //לא מוצג
+        modalElement.classList.toggle("hide"); // לא מוצג
         timeUp = setInterval(roundTimer, 1000); ////משתנה אינטרבל המייצג את הספירה לאחור של טיימר המשחק
         time = setInterval(GenerateHoles, gPlayTime);//אינטרבל שמגריל חורים לחפרפרת
+        counter = 5;
+        modalElement.innerHTML = `<h2> Game starts in: </br> ${counter} </h2>`;
     }
 }
 
@@ -270,28 +273,13 @@ function countDown() { //קורה כל שניה
 פרמטרים: לא מקבלות
 ערך מוחזר: לא מחזירות
  * */ 
-function onStartEasy() {
-    gBoardSize = 9;
-    gFlag = true;
-    gPlayTime = 2000;
-    startGameButton.style.display = "block"; //מראה את כפתור תחילת המשחק לאחר בחירת רמת קושי
-    gameMode = 'easy';
-}
 
-function onStartMedium() {
-    gBoardSize = 12;
-    gFlag = true;
-    gPlayTime = 1200;
+function difficulty(mode,playtime,boardsize) {
     startGameButton.style.display = "block";//מראה את כפתור תחילת המשחק לאחר בחירת רמת קושי
-    gameMode = 'medium';
-}
-
-function onStartHard() {
-    gBoardSize = 18;
+    gameMode = mode;
     gFlag = true;
-    gPlayTime = 750;
-    startGameButton.style.display = "block";//מראה את כפתור תחילת המשחק לאחר בחירת רמת קושי
-    gameMode = 'hard';
+    gBoardSize = boardsize;
+    gPlayTime = playtime;
 }
 
 function OnInit() {
@@ -308,5 +296,6 @@ function OnInit() {
     resetGameButton.style.display = "none"; // הסתרת כפתור איפוס המשחק
     startGameButton.style.display = "none"; //הסתרת כפתור תחילת המשחק
 }
+
 
 console.info("All rights saved to Ori Cohen.");
