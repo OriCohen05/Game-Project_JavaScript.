@@ -1,2 +1,2 @@
 # Game-Project_JavaScript.
-Finished
+JavaScript Es6+Es7 Whack a mole game project- School project
